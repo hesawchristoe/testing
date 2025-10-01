@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mini Playlist Music Player</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    color: rgb(248, 248, 248);
+    padding: 50px;
+
+    /* Background image from Music Playeer folder */
+    background-image: url('Music Playeer/bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+  }
+
+  h1 {
+    margin-bottom: 30px;
+    text-shadow: 2px 2px 5px #000; /* 3D shadow effect */
+  }
+
+  button {
+    padding: 10px 20px;
+    margin: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background: #444444;
+    color: white;
+    transition: background 0.3s, transform 0.2s;
+  }
+
+  button:hover {
+    background: #c50e0e;
+    transform: scale(1.05);
+  }
+</style>
+</head>
+<body>
+
+<h1>Julyos Playlist Player</h1>
+
+<!-- Audio element with controls -->
+<audio id="music" controls></audio>
+
+<div>
+  <button onclick="prevSong()">⏮ Previous</button>
+  <button onclick="playMusic()">Play ▶</button>
+  <button onclick="pauseMusic()">Pause ⏸</button>
+  <button onclick="stopMusic()">Stop ⏹</button>
+  <button onclick="nextSong()">Next ⏭</button>
+</div>
+
+<p id="currentSong"></p>
+
+<script>
+  // List of songs in the Music Playeer folder
+  const songs = [
+    "Music Playeer/Cupofjoe.mp3",
+    "Music Playeer/TumblrGirls.mp3",
+    "Music Playeer/girlyouloud.mp3"
+  ];
+  
+  let currentIndex = 0;
+  const music = document.getElementById("music");
+  const currentSongText = document.getElementById("currentSong");
+
+  function loadSong(index) {
+    music.src = songs[index];
+    currentSongText.textContent = `Now playing: ${songs[index].split("/").pop()}`;
+    music.play();
+  }
+
+  function playMusic() { music.play(); }
+  function pauseMusic() { music.pause(); }
+  function stopMusic() { music.pause(); music.currentTime = 0; }
+
+  function nextSong() {
+    currentIndex = (currentIndex + 1) % songs.length;
+    loadSong(currentIndex);
+  }
+
+  function prevSong() {
+    currentIndex = (currentIndex - 1 + songs.length) % songs.length;
+    loadSong(currentIndex);
+  }
+
+  // Load first song on page load
+  loadSong(currentIndex);
+</script>
+
+</body>
+</html>
